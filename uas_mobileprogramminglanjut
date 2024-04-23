@@ -1,0 +1,106 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(ProfileApp());
+}
+
+class ProfileApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Profile App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: ProfileScreen(),
+    );
+  }
+}
+
+class ProfileScreen extends StatefulWidget {
+  @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  String _name = '';
+  String _nim = '';
+  String _address = '';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('My Profile'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TextField(
+              decoration: InputDecoration(labelText: 'Nama'),
+              onChanged: (value) {
+                setState(() {
+                  _name = value;
+                });
+              },
+            ),
+            SizedBox(height: 20),
+            TextField(
+              decoration: InputDecoration(labelText: 'NIM'),
+              onChanged: (value) {
+                setState(() {
+                  _nim = value;
+                });
+              },
+            ),
+            SizedBox(height: 20),
+            TextField(
+              decoration: InputDecoration(labelText: 'Alamat'),
+              onChanged: (value) {
+                setState(() {
+                  _address = value;
+                });
+              },
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Tampilkan dialog dengan informasi profil
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Profil Saya'),
+                      content: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text('Nama: $_name'),
+                          SizedBox(height: 10),
+                          Text('NIM: $_nim'),
+                          SizedBox(height: 10),
+                          Text('Alamat: $_address'),
+                        ],
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Tutup'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              child: Text('Simpan Profil'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
